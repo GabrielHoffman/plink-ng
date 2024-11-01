@@ -13,6 +13,9 @@ LIBDEFLATE = $(LIBDEFLATE_SOURCES:.c=.o)
 LIBPLINK2_SOURCES = $(INCL)/include/plink2_base.cc $(INCL)/include/plink2_bits.cc $(INCL)/include/pgenlib_misc.cc $(INCL)/include/pgenlib_read.cc $(INCL)/include/plink2_bgzf.cc $(INCL)/include/plink2_string.cc $(INCL)/include/plink2_text.cc $(INCL)/include/plink2_thread.cc $(INCL)/include/plink2_zstfile.cc
 LIBPLINK2 = $(LIBPLINK2_SOURCES:.cc=.o)
 
+LIBPFFI_SOURCES = $(INCL)/pvar_ffi_support.cpp $(INCL)/pgenlib_ffi_support.cpp
+LIBFFI = $(LIBPFFI_SOURCES:.cpp=.o)
+
 $(SHLIB): @ZSTD_SHLIB@ @LIBDEFLATE_SHLIB@ libPLINK2.a
 
 libPGZSTD.a: $(LIBZSTD)
@@ -22,9 +25,9 @@ libPGDEFLATE.a: $(LIBDEFLATE)
 	$(AR) rcs libPGDEFLATE.a $(LIBDEFLATE)
 
 libPLINK2.a: $(LIBPLINK2)
-	$(AR) rcs libPLINK2.a $(LIBPLINK2)
+	$(AR) rcs libPLINK2.a $(LIBPLINK2) $(LIBFFI)
 
 clean:
-	rm -f $(SHLIB) $(OBJECTS) @ZSTD_CLEAN@ @LIBDEFLATE_CLEAN@ $(LIBPLINK2)
+	rm -f $(SHLIB) $(OBJECTS) @ZSTD_CLEAN@ @LIBDEFLATE_CLEAN@ $(LIBPLINK2) $(LIBFFI)
 
 OBJECTS = $(INCL)/pvar_ffi_support.o $(INCL)/pgenlib_ffi_support.o pvar.o pgenlibr.o RcppExports.o
