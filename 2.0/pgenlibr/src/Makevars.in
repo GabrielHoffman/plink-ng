@@ -24,7 +24,7 @@ libPGZSTD.a: $(LIBZSTD)
 libPGDEFLATE.a: $(LIBDEFLATE)
 	$(AR) rcs libPGDEFLATE.a $(LIBDEFLATE)
 
-libPLINK2.a: $(LIBPLINK2)
+libPLINK2.a: $(LIBPLINK2) $(LIBFFI)
 	$(AR) rcs libPLINK2.a $(LIBPLINK2) $(LIBFFI)
 
 clean:
